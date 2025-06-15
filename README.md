@@ -19,7 +19,7 @@ The sample in this latent space is then transformed from the latent space back t
 To train the VAE, you need to introduce a loss which does not only penalize if you don't reconstruct images properly but also one that makes sure that you really have a nice continuous latent space, this can be done with the loss
 ![sample](assets/loss.JPG)
 Here the first term is the reconstruction error and the second is the KL-divergence which penalizes sparsity. One more crucial insight from the paper by Kingma and Welling is that if you want to do backpropagation for a model which involves the random sampling of the encoder shown in (1), you can do the following trick
-![sample](assets/reparametrization.JPG)
+![sample](assets/reparametrize.JPG)
 which allows for separating separating the stochastic and the learnable part of the encoder output, which enables backpropagation only for the learnable part whereas the nonlearnable part is left untouched.
 
 A VAE such as the one described above works great in theory, as well as when you try it for the MNIST database, but if you want to do serious things like image generation it turns out that you won't get far if you just construct some CNN of a couple of layers, it will likely not be able to grasp the complex nature of faces. See this example of when I tried to do this with just the loss function of (2):
