@@ -41,7 +41,7 @@ This Julia Roberts image somehow has label 4979. Based on this it seems that the
 ![continuum](results/morph_roster_roberts.gif)
 
 This looks quite bad! It seems to be the case that the model somehow did very poorly at learning to reconstruct Julia Roberts. In the notebook in the VAE folder 
-I make an attempt to improve this. In particular, I simply proceed training the VAE but now exclusively on the Julia Roberts images. I also take the KL divergence loss to be a factor 0.02 lower because I am only interested in reconstruction, the training set is far too small to hope that you can get a nice smooth distribution of images. This means we are on purpose overfitting our VAE and effectively turning the VAE into an AE. That is the price we have to pay for getting something that looks somewhat decent. The result is below. 
+I make an attempt to improve this. In particular, I simply proceed training the VAE but now exclusively on the Julia Roberts images. I also take the KL divergence loss to lowered by factor 0.02 lower because I am only interested in reconstruction, the training set is far too small to hope for a nice smooth distribution of images. This means we are on purpose overfitting our VAE and effectively turning the VAE into an AE. That is the price we have to pay for getting something that looks somewhat decent. The result is below. 
 
 ![continuum](results/morph_roster_overtrained.gif)
 
