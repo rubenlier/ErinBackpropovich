@@ -13,13 +13,13 @@ In this folder, I classify images on the basis of whether or not they are Julia 
 ## Image Generation (VAE)
 ---
 Lastly, I consider generation of images with VAE. VAE's were invented by Kingma and Welling in 2013, in a [paper](https://arxiv.org/abs/1312.6114). The idea is that you learn to sample a continuous p(x), i.e. you to obtain a smooth distribution of states x which are like the states in your input. The way you achieve this is by narrowing down your input to a very tiny latent space vector z which is learned to efficiently capture the nature of the input. However, this must be done in a randomized way, because otherwise you would have a simple autoencoder, which you could view as an overfitted version of the variational autoencoder in the sense that it is hyperfocused on a tiny amount of points in the latent space, thus making the latent space sparse. The way you do this is by letting the output of the encoder be the mean and variance of a distribution from which z is sampled, i.e. 
-![sample](assets/sample.jpg)
+![sample](assets/sample.JPG)
 The sample in this latent space is then transformed from the latent space back to an image with the decoder as
-![sample](assets/decoder.jpg)
+![sample](assets/decoder.JPG)
 To train the VAE, you need to introduce a loss which does not only penalize if you don't reconstruct images properly but also one that makes sure that you really have a nice continuous latent space, this can be done with the loss
-![sample](assets/loss.jpg)
+![sample](assets/loss.JPG)
 Here the first term is the reconstruction error and the second is the KL-divergence which penalizes sparsity. One more crucial insight from the paper by Kingma and Welling is that if you want to do backpropagation for a model which involves the random sampling of the encoder shown in (1), you can do the following trick
-![sample](assets/reparametrization.jpg)
+![sample](assets/reparametrization.JPG)
 which allows for separating separating the stochastic and the learnable part of the encoder output, which enables backpropagation only for the learnable part whereas the nonlearnable part is left untouched.
 
 A VAE such as the one described above works great in theory, as well as when you try it for the MNIST database, but if you want to do serious things like image generation it turns out that you won't get far if you just construct some CNN of a couple of layers, it will likely not be able to grasp the complex nature of faces. See this example of when I tried to do this with just the loss function of (2):
@@ -30,7 +30,7 @@ Training one epoch of this takes 17 hours on humble laptop and I did 10, after w
 ![JuliaRoberts](results/CelebA_64_epoch15.png)
 
 I guess the lesson learned is that the CelebA set is very constrained in the way it displays celebrities' faces and even with this dataset it takes many fortnights to get something reasonable, so that the model that is eventually trained is simply too rigid to adapt to images of a more diverse kind. Instead, I now simplify and hold on to what works. In particular, I try to look for images of Julia Roberts in the CelebA dataset and look for the value of the corresponding vector in latent space. We can then try to move around in this vector space in such a way that we leave the facial characteristics invariant to still get a continuum of different Julia Roberts'. But the CelebA dataset has 200K images (!), so how do we find images of Julia Roberts in the CelebA dataset? We use our binary classifier! I ran all the images in CelebA through the model which is trained to have only the final two blocks unfrozen and selected positives with a threshold for the model output of 0.995 and still got 56 images. Out of these images, I managed to find 1 image that is of Julia Roberts:
-![JuliaRoberts](classification/passed_images/030154.png)
+![JuliaRoberts](classification/passed_images/030154.jpg)
 
 Now the CelebA dataset is anonomized but still provides labels, and the obtained label was 4990, so with that I could find all the other Julia Roberts images, except for one other which I obtained in a different attempt
 
