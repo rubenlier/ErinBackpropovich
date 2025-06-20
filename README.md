@@ -10,7 +10,7 @@ In this folder I scrape the images. The images I scrape are of celebrity. To kee
 I generate all the corresponding faceboxes and then it is straightforward to identify the faulty picture by scrolling through the faces and looking for those that do not look like Julia Roberts. 
 ## Image Classification
 ---
-In this folder, I classify images on the basis of whether or not they are Julia Roberts. For this I use transfer learning, in particular I use the mobilenet_v2 model pretrained by PyTorch. First, I show that the model I use for transferring actually does what it says, namely that it can tell a bear apart from an elephant (as well as classify 998 other things). Then, I use it to classify Julia Roberts or not. For this, I unfreeze the final layer of the transferred model, meaning that I trust that whatever was used in the other blocks of layers to recognize the 1000 things of this pretrained model will also work for recognizing Julia Roberts, which turns out to be the case mostly. I experiment with unfreezing 2, 3 or 4 of the final layers, which does not make a big difference for the test set error, whereas the training set loss drops if you unfreeze more layers, i.e. unfreezing more only leads to more overfitting.
+In this folder, I classify images on the basis of whether or not they are Julia Roberts. For this I use transfer learning, in particular I use the mobilenet_v2 model pretrained by PyTorch. First, I show that the model I use for transferring actually does what it says, namely that it can tell a bear apart from an elephant (as well as classify 998 other things). Then, I use it to classify Julia Roberts or not. For this, I unfreeze the final layer of the transferred model, meaning that I trust that whatever was used in the other blocks of layers to recognize the 1000 things of this pretrained model will also work for recognizing Julia Roberts, which turns out to be the case mostly. I experiment with unfreezing 2, 3 or 4 of the final layers, which does not make a big difference for the test set error, whereas the training set loss drops if you unfreeze more layers, i.e. unfreezing more layers only leads to more overfitting.
 
 ## Image Generation (VAE)
 ---
@@ -52,7 +52,7 @@ Now, the CelebA dataset is anonymized but there is still a file that connects im
 
 ![JuliaRoberts](results/122653.jpg)
 
-This image of Julia Roberts somehow has label 4979. Based on this it seems that there are 22 Julia Roberts in the full dataset, which means that the model changed a set of 200K images with 22 positives (0.011%) to a set of 56 images with 1 positive (1.78%), which is not bad considering that the classifier only used 800 positives and 800 negatives to train. We now have access to multiple latent representations of Julia Roberts. If we try to make a morphing gif like we did before but now only of Julia Roberts images, we obtain:
+This image of Julia Roberts somehow has label 4979. Based on this it seems that there are 22 Julia Robertses in the full dataset, which means that the model changed a set of 200K images with 22 positives (0.011%) to a set of 56 images with 1 positive (1.78%), which is not bad considering that the classifier only used 800 positives and 800 negatives to train. We now have access to multiple latent representations of Julia Roberts. If we try to make a morphing gif like we did before but now only of Julia Roberts images, we obtain:
 
 ![continuum](results/morph_roster_roberts.gif)
 
