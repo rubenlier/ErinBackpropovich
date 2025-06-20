@@ -4,7 +4,7 @@ In this repo I go through how you can use convolutional neural networks (CNN) fo
 ## Image scraping
 ---
 In this folder I scrape the images. The images I scrape are of celebrity. To keep it simple, I focus on one celebrity. I initially wanted to scrape images of my favorite actor, Nicolas Cage. However, the number of usable images was limited. ChatGPT suggested Tom Cruise next, but many of his photos included complex backgrounds like airplanes. Finally, I settled on Julia Roberts — a choice that proved workable. Please feel free to choose your own favorite celebrity. I also scrape a second folder of images of several celebrities that are not Julia Roberts so that it can be used for binary classification. Some of the images of Julia Roberts I scraped are not great, especially when Julia Roberts is barely visible or there are many other images available. The way you can efficiently remove faulty pictures is by using a faceboxer which turns an image of a person into an image of the face only. This is an example
-![crop](scraping/roberts_images/crop/julia_roberts_01.jpg)
+![crop](Image%20scraping/roberts_images/crop/julia_roberts_01.jpg)
 
 I generate all the corresponding faceboxes and then it is straightforward to identify the faulty picture by scrolling through the faces and looking for those that do not look like Julia Roberts. 
 ## Image Classification
@@ -37,7 +37,7 @@ Training one epoch of this takes 17 hours on my humble laptop and I did 10, afte
 ![JuliaRoberts](results/CelebA_64_epoch15.png)
 
 I guess the lesson learned is that the CelebA set is very constrained because the images are aligned and centered and even with this dataset it takes many days to get something reasonable, so that the model that is eventually trained is simply too rigid to adapt to images of a more diverse kind. Instead, I now simplify and hold on to what works. In particular, I try to look for images of Julia Roberts in the CelebA dataset and look for the value of the corresponding vector in latent space. We can then try to move around in this vector space in such a way that we leave the facial characteristics invariant to still get a continuum of different Julia Roberts'. But the CelebA dataset has 200K images (!), so how do we find images of Julia Roberts in the CelebA dataset? We use our binary classifier! I ran all the images in CelebA through the model which is trained to have only the final two blocks unfrozen and selected positives with a threshold for the model output of 0.995 and still got 56 images. Out of these images, I managed to find 1 image that is of Julia Roberts:
-![JuliaRoberts](classification/passed_images/030154.jpg)
+![JuliaRoberts](Image%20Classification/passed_images/030154.jpg)
 
 Now, the CelebA dataset is anonymized but there is still a file that connects images to labels, and the corresponding label is 4990, so with that I could find all the other Julia Roberts images, except for one other which I obtained in a different attempt
 
